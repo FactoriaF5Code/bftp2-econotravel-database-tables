@@ -27,6 +27,8 @@ class IntegrationTests {
 
     @Autowired
     ExperienceRepository experienceRepository;
+    @Autowired
+    CategoryRepository categoryRepository;
 
     @BeforeEach
     void setUp() {
@@ -68,9 +70,9 @@ class IntegrationTests {
         mockMvc.perform(get("/api/categories"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
-                .andExpect(jsonPath("$[0].id", equalTo("0")))
+                .andExpect(jsonPath("$[0].id", equalTo(0)))
                 .andExpect(jsonPath("$[0].name", equalTo("Cultural")))
-                .andExpect(jsonPath("$[1].id", equalTo("1")))
+                .andExpect(jsonPath("$[1].id", equalTo(1)))
                 .andExpect(jsonPath("$[1].name", equalTo("Naturaleza")))
                 .andDo(print());
     }
@@ -86,15 +88,19 @@ class IntegrationTests {
     }
 
     private void addSampleData() {
-        List<Experience> movies = List.of(
+        List<Experience> experiences = List.of(
                 new Experience("Paseo por el Montseny"),
                 new Experience("Visita a la sagrada familia")
         );
 
-        experienceRepository.saveAll(movies);
+        experienceRepository.saveAll(experiences);
 
+        List<Category> categories = List.of(
+                new Category(0L, "Cultural"),
+                new Category(1L, "Naturaleza")
+        );
 
-
+        categoryRepository.saveAll(categories);
 
     }
 
