@@ -1,10 +1,10 @@
 package com.econotravel.api;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="categories")
@@ -13,6 +13,9 @@ public class Category {
     @Id
     private Long id;
     private String name;
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<Experience> experiences;
 
     public Category() {
     }
@@ -36,5 +39,15 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+
+    @JsonIgnore
+    public List<Experience> getExperiences() {
+        return experiences;
+    }
+
+    public void setExperiences(List<Experience> experiences) {
+        this.experiences = experiences;
     }
 }

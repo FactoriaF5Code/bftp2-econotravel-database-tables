@@ -11,6 +11,15 @@ public class Experience{
 
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+
+    public Category getCategory() {
+        return category;
+    }
+
     public Experience() {
     }
 
@@ -32,5 +41,9 @@ public class Experience{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
